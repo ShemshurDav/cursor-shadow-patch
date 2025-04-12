@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> This tool may no longer be actively maintained, as Ive mostly switched from Cursor to Roo Code with Gemini 2.5 Pro. 
+
 # Cursor Shadow Patch
 
 Patch `out/main.js` to force diffferent machine ids.
@@ -14,4 +17,6 @@ Patch `out/main.js` to force diffferent machine ids.
 3. If it shows all green and no red, youre done.
 4. Next time when you need a new machine id or when youve just updated cursor, run it again.
 
-_Early test. Feel free to try it out :3_
+#### Note
+
+Changing the machine ID may not be enough to resolve all issues. Cursor can still block you based on your **email** and **IP address**.
