@@ -313,6 +313,7 @@ def macaddr(macaddr: str):
 
 
 def cleanlog(cachelist=("*Token", "*ID"), conn=None):
+    """DEPRECATED. Now we dont need to logout. Calling this should do nothing."""
     if not conn:
         if not globaldir or not globaldir.exists():
             return
