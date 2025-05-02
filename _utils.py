@@ -18,6 +18,8 @@ RESET = "\033[0m"
 REVERSE = "\033[7m"
 NO_REVERSE = "\033[27m"
 
+globaldir = None  # global tmp file dir
+
 
 def pause():
     input(f"\n{REVERSE}Press Enter to continue...{NO_REVERSE}")
@@ -48,6 +50,13 @@ def remove_readonly(path: pathlib.Path):
         os.chmod(path, S_IWRITE)
     except:
         pass
+
+
+def tmppath(tmp: pathlib.Path):
+    global globaldir  # global tmp file dir
+    tmp = next((tmp / "User").glob("glob*"))
+    globaldir = next(tmp for tmp in tmp.glob("*b") if tmp.is_file())
+    return globaldir
 
 
 def appimagepath(p: str):
@@ -234,6 +243,16 @@ def appbundle_from_jspath(jspath: pathlib.Path):
 
 def appbundle_to_jspath(appbundle: pathlib.Path):
     return appbundle / "Contents" / "Resources" / "app" / "out" / "main.js"
+
+
+def clean_tmp(tmp: pathlib.Path):
+    tmp = tmppath(tmp)
+    # for file in tmp.glob("*"):
+    #     if file.is_file():
+    #         os.remove(file)
+    tmp_glob = ["cache*", "*onfig"]  # cache.json, *.cursor_config
+    cleanlog(tmp_glob)  # type:ignore
+    cleantmp(tmp_glob)  # type:ignore
 
 
 def apppath():
