@@ -3,6 +3,7 @@ import re
 import random
 import shutil
 import pathlib
+import sqlite3
 import platform
 from uuid import uuid4
 from stat import S_IWRITE
@@ -309,6 +310,19 @@ def macaddr(macaddr: str):
             macaddr = ":".join([f"{random.randint(0, 255):02X}" for _ in range(6)])
         print(macaddr)
     return macaddr
+
+
+def cleanlog(cachelist=("*Token", "*ID"), conn=None):
+    if not conn:
+        if not globaldir or not globaldir.exists():
+            return
+        conn = sqlite3.connect(globaldir)
+    conn.cursor().execute(
+        "DELETE FROM ItemTable WHERE key GLOB ? OR key GLOB ?",
+        ["cursor*/" + i for i in cachelist],
+    )
+    conn.commit()
+    conn.close()
 
 
 def load(path: pathlib.Path):
